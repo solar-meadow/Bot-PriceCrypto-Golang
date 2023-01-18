@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func BotTokenFromEnv(key string) (string, error) {
+func FromEnv(key string) (string, error) {
 	err := godotenv.Load(".env")
 	if err != nil {
 		return "", err

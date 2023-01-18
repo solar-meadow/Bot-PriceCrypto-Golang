@@ -14,7 +14,7 @@ const botApi = "https://api.telegram.org/bot"
 var AllowedCryptoName = make(map[string]int)
 
 func main() {
-	botToken, err := token.BotTokenFromEnv("BOT_TOKEN")
+	botToken, err := token.FromEnv("BOT_TOKEN")
 	if err != nil {
 		log.Println(err)
 		return
@@ -26,6 +26,11 @@ func main() {
 	// fill maps allowed values for coincap api
 	service.FillAllowedValues(&AllowedCryptoName)
 
+	botName, err := token.FromEnv("BOT_NAME")
+	if err != nil {
+		botName = "Bot_Name"
+	}
+	log.Println("Bot running... name in telegram:", botName)
 	for {
 		updates, err := client.GetUpdates()
 		if err != nil {
