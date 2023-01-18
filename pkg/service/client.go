@@ -11,8 +11,10 @@ import (
 
 type MessageService struct {
 	*http.Client
-	botUrl string
-	Offset int
+	botUrl              string
+	Offset              int
+	AllowedCryptoName   (map[string]int)
+	AllowedCryptoSymbol (map[string]int)
 }
 
 func NewHttpClient(botUrl string) *MessageService {
@@ -31,5 +33,7 @@ func NewHttpClient(botUrl string) *MessageService {
 		},
 		botUrl,
 		0,
+		nil,
+		nil,
 	}
 }

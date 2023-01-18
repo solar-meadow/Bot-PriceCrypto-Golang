@@ -11,6 +11,11 @@ import (
 
 const botApi = "https://api.telegram.org/bot"
 
+var (
+	AllowedCryptoName   = make(map[string]int)
+	AllowedCryptoSymbol = make(map[string]int)
+)
+
 func main() {
 	botToken, err := token.BotTokenFromEnv("BOT_TOKEN")
 	if err != nil {
@@ -19,11 +24,23 @@ func main() {
 	}
 	botUrl := botApi + botToken
 	client := service.NewHttpClient(botUrl)
+	client.AllowedCryptoName = AllowedCryptoName
+	client.AllowedCryptoSymbol = AllowedCryptoSymbol
 	wg := &sync.WaitGroup{}
+	// fill maps allowed values for coincap api
+	if err = service.FillAllowedValues(&AllowedCryptoName, 1); err != nil {
+		log.Println(err)
+		return
+	}
+	if err = service.FillAllowedValues(&AllowedCryptoSymbol, 2); err != nil {
+		log.Println(err)
+		return
+	}
 	for {
 		updates, err := client.GetUpdates()
 		if err != nil {
 			log.Println(err)
+
 			return
 		}
 		for _, update := range updates {
