@@ -13,6 +13,6 @@ type LoggingRoundTripper struct {
 }
 
 func (l LoggingRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
-	fmt.Fprintf(l.Logger, "Time: [%s] | Method: [%s] | URL: [%s] \n", time.Now().Format(time.RFC1123), r.Method, r.URL)
+	fmt.Fprintf(l.Logger, "Time: [%s] | Method: [%s]", time.Now().Format(time.RFC1123), r.Method)
 	return l.Next.RoundTrip(r)
 }

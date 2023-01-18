@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"sync"
 
@@ -32,10 +31,14 @@ func SaveLog(update *model.Update, wg *sync.WaitGroup) error {
 	}
 	info := (update.Info())
 	fmt.Println()
-	log.Printf("INFO: Writing file for update ID: %d\n", update.UpdateId)
+
 	fmt.Print(info)
-	for range info {
+	for i := range info {
 		fmt.Print("-")
+		if i == len(info)-1 {
+			fmt.Print("-")
+			fmt.Println()
+		}
 	}
 	wg.Done()
 	return nil

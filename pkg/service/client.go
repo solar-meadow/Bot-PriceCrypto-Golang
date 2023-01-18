@@ -3,7 +3,10 @@ package service
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"time"
+
+	"github.com/with-insomnia/Bot-PriceCrypto-Golang/pkg/logger"
 )
 
 type MessageService struct {
@@ -20,10 +23,10 @@ func NewHttpClient(botUrl string) *MessageService {
 				fmt.Println("[REDIRECT]")
 				return nil
 			},
-			// Transport: &logger.LoggingRoundTripper{
-			// 	Logger: os.Stdout,
-			// 	Next:   http.DefaultTransport,
-			// },
+			Transport: &logger.LoggingRoundTripper{
+				Logger: os.Stdout,
+				Next:   http.DefaultTransport,
+			},
 			Timeout: time.Second * 30,
 		},
 		botUrl,
